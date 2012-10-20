@@ -428,6 +428,8 @@ CreateMethod.prototype._createFunc = function() {
   ret += method;
   if (this.instr.isInherit) {
     ret += "\t${1:goog.base(this, '" + this.instr.title + "'${2});}\n";
+  } else if (this.isConstructor && this.instr.ret) {
+    ret += "\t${1:goog.base(this);}\n";
   } else {
     ret += "\t${1}\n";
   }
