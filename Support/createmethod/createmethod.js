@@ -407,6 +407,9 @@ CreateMethod.prototype._createFunc = function() {
   var isStatic = this.instr.isStatic || this.instr.isConstructor;
 
   var method = this.ns + (isStatic ? '.' : '.prototype.') + this.instr.title + ' =';
+  if (this.instr.isConstructor) {
+    method = this.instr.title + ' =';
+  }
   var funcStr = ' function(';
   if (method.length + funcStr.length > CLOUMN_WRAP) {
     method += "\n\t\t";
@@ -428,7 +431,7 @@ CreateMethod.prototype._createFunc = function() {
   ret += method;
   if (this.instr.isInherit) {
     ret += "\t${1:goog.base(this, '" + this.instr.title + "'${2});}\n";
-  } else if (this.isConstructor && this.instr.ret) {
+  } else if (this.instr.isConstructor && this.instr.ret) {
     ret += "\t${1:goog.base(this);}\n";
   } else {
     ret += "\t${1}\n";
