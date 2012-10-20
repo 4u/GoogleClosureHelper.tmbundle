@@ -11,7 +11,7 @@ var util = require("util");
 var exec = require('child_process').exec;
 var fs = require('fs');
 var env = process.env;
-var FileInfo = require(env.TM_BUNDLE_SUPPORT + "/ClosureFileInfo/fileinfo.js");
+var FileInfo = require(env.TM_BUNDLE_SUPPORT + "/fileinfo/fileinfo.js");
 var CreateMethod = require(env.TM_BUNDLE_SUPPORT + "/createmethod/createmethod.js");
 
 var fileInfo = new FileInfo(env.TM_FILEPATH);
