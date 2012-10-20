@@ -256,7 +256,7 @@ CreateMethod.prototype._parseType = function(type) {
 
 CreateMethod.prototype._addRet = function(obj, matches) {
   if (matches.ret) {
-    obj.ret = matches.ret;
+    obj.ret = this._parseType(matches.ret);
   }
 };
 
@@ -364,6 +364,10 @@ CreateMethod.prototype._addTypeJsDoc = function(jsDoc) {
   if (this.instr.isDefine) {
     jsDoc.push('@' + TYPE_DEFINE);
   }
+
+  if (this.instr['_type'] == 'function' && !this.instr.isConstructor && this.instr.ret) {
+    jsDoc.push('@return {' + this.instr.ret.expression + '}');
+  }
   // if (this.instr.isPublic) {
   //   jsDoc.push('@' + TYPE_PUBLIC);
   // }
@@ -398,9 +402,9 @@ CreateMethod.prototype._createFunc = function() {
   this._addTypeJsDoc(jsDoc);
 
   if (this.instr.isConstructor && this.instr.ret) {
-    jsDoc.push('@extends {' + this.instr.ret + '}');
+    jsDoc.push('@extends {' + this.instr.ret.expression + '}');
   } else if (this.instr.isConstructor && this.instr.ret) {
-    jsDoc.push('@return {' + this.instr.ret + '}');
+    jsDoc.push('@return {' + this.instr.ret.expression + '}');
   }
 
   var ret = this._createJsDoc(jsDoc);
