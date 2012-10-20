@@ -353,16 +353,16 @@ CreateMethod.prototype._addTypeJsDoc = function(jsDoc) {
     jsDoc.push('@' + TYPE_PROTECTED_STRICT);
   }
   if (this.instr.isOverride) {
-    jsDoc.push('@' + TYPE_OVERRIDE);
+    jsDoc.push('@' + TYPE_OVERRIDE_STRICT);
   }
   if (this.instr.isInherit) {
-    jsDoc.push('@' + TYPE_INHERIT);
+    jsDoc.push('@' + TYPE_INHERIT_STRICT);
   }
   if (this.instr.isEnum) {
-    jsDoc.push('@' + TYPE_ENUM);
+    jsDoc.push('@' + TYPE_ENUM_STRICT);
   }
   if (this.instr.isDefine) {
-    jsDoc.push('@' + TYPE_DEFINE);
+    jsDoc.push('@' + TYPE_DEFINE_STRICT);
   }
 
   if (this.instr['_type'] == 'function' && !this.instr.isConstructor && this.instr.ret) {
