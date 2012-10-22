@@ -443,9 +443,9 @@ CreateMethod.prototype._createFunc = function() {
   ret += "};";
 
   if (this.instr.isConstructor && this.instr.ret) {
-    ret += "\n" + 'goog.inherits(' + this.instr.title + ', ' + this.instr.ret + ');';
+    ret += "\n" + 'goog.inherits(' + this.instr.title + ', ' + this.instr.ret.expression + ');';
   }
-  if (this.isSingleton) {
+  if (this.instr.isSingleton) {
     ret += "\n" + 'goog.addSingletonGetter(' + this.instr.title + ');';
   }
 
@@ -462,7 +462,6 @@ CreateMethod.prototype._createProp = function() {
   this._addTypeJsDoc(jsDoc);
 
   var ret = this._createJsDoc(jsDoc);
-  var isStatic = this.instr.isDefine || this.instr.isStatic || this.instr.isEnum;
 
   var value = this.instr.val;
   if (value === undefined) {
@@ -494,9 +493,14 @@ CreateMethod.prototype._createProp = function() {
     }
   }
 
-  ret += this.ns + (isStatic ? '.' : '.prototype.') + this.instr.title + (
-    value === null ? '' : ' = ${1:' + value + '}'
-  ) + ';';
+  var isStatic = this.instr.isDefine || this.instr.isStatic || this.instr.isEnum;
+  ret += this.ns + (isStatic ? '.' : '.prototype.') + this.instr.title;
+  if (this.instr.isEnum) {
+    ret += "{\n\t${1}\n}";
+  } else {
+    ret += value === null ? '' : ' = ${1:' + value + '}';
+  }
+  ret += ';';
 
   return ret;
 };
