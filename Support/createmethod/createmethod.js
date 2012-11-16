@@ -496,7 +496,7 @@ CreateMethod.prototype._createProp = function() {
   var isStatic = this.instr.isDefine || this.instr.isStatic || this.instr.isEnum;
   ret += this.ns + (isStatic ? '.' : '.prototype.') + this.instr.title;
   if (this.instr.isEnum) {
-    ret += "{\n\t${1}\n}";
+    ret += " = {\n\t${1}\n}";
   } else {
     ret += value === null ? '' : ' = ${1:' + value + '}';
   }
